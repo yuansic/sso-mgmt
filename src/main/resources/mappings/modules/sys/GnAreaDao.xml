@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.x.platform.modules.sys.dao.GnAreaDao">
+    
+	<sql id="gnAreaColumns">
+		a.area_code AS "areaCode",
+		a.area_name AS "areaName",
+		a.province_code AS "provinceCode",
+		a.city_code AS "cityCode",
+		a.area_level AS "areaLevel",
+		a.parent_area_code AS "parentAreaCode",
+		a.sort_id AS "sortId",
+		a.state AS "state",
+		a.remark AS "remark",
+		a.tenant_id AS "tenantId",
+		a.id AS "id"
+	</sql>
+	
+	<sql id="gnAreaJoins">
+	</sql>
+    
+	<select id="get" resultType="GnArea">
+		SELECT 
+			<include refid="gnAreaColumns"/>
+		FROM gn_area a
+		<include refid="gnAreaJoins"/>
+
+		<where>
+			
+				AND a.id = #{id}
+		
+		</where>
+	</select>
+	<select id="getByCode" resultType="GnArea">
+		SELECT 
+			<include refid="gnAreaColumns"/>
+		FROM gn_area a
+		<include refid="gnAreaJoins"/>
+
+		<where>
+			
+				AND a.AREA_CODE = #{areaCode}
+		
+		</where>
+	</select>	
+	<!-- add by zhouxiaohu -->
+	<select id="findListByParentAreaCode" resultType="GnArea">
+		SELECT 
+			<include refid="gnAreaColumns"/>
+		FROM gn_area a
+		<where>
+	    AND a.state = 1
+	    <if test="parentAreaCode != null and parentAreaCode != ''">
+				AND a.parent_area_code =#{parentAreaCode} 
+		</if>
+		 <if test="parentAreaCode == null || parentAreaCode == ''">
+				AND a.parent_area_code IS NULL
+		</if>
+		
+		</where>
+	</select>
+	
+	<select id="findList" resultType="GnArea">
+		SELECT 
+			<include refid="gnAreaColumns"/>
+		FROM gn_area a
+		<include refid="gnAreaJoins"/>
+		<where>
+			<if test="areaCode != null and areaCode != ''">
+				AND a.area_code like 
+					<if test="dbName == 'oracle'">'%'||#{areaCode}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{areaCode}+'%'</if>
+					<if test="dbName == 'mysql'">CONCAT('%/', #{areaCode}, '%')  ESCAPE '/' </if>
+						
+			</if>
+			<if test="areaName != null and areaName != ''">
+				AND a.area_name like 
+					<if test="dbName == 'oracle'">'%'||#{areaName}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{areaName}+'%'</if>
+					<if test="dbName == 'mysql'">CONCAT('%/', #{areaName}, '%')  ESCAPE '/' </if>
+			</if>
+			<if test="id != null and id != ''">
+				AND a.id = #{id}
+			</if>			
+			<if test="state != null and state != ''">
+				AND a.state = #{state}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="GnArea">
+		SELECT 
+			<include refid="gnAreaColumns"/>
+		FROM gn_area a
+		<include refid="gnAreaJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findTreeInit" resultType="GnArea">
+		SELECT
+			a.id,
+			a.parent_area_code AS "parentAreaCode",
+			a.area_name AS "areaName"
+		FROM gn_area a
+	
+		<where>
+			AND a.parent_area_code = '00'
+			or a.parent_area_code is null
+		</where>
+		ORDER BY sort_id
+	</select>
+	<select id="findByParentIdsLike" resultType="GnArea">
+		SELECT
+			a.id,
+			a.parent_id AS "parentAreaCode",
+			a.parent_ids
+		FROM gn_area a
+		<include refid="gnAreaJoins"/>
+		<where>
+			
+			AND a.parent_ids LIKE #{parentIds}
+		</where>
+	</select>
+	<insert id="insert">
+		INSERT INTO gn_area(
+			area_code,
+			area_name,
+			province_code,
+			city_code,
+			area_level,
+			parent_area_code,
+			sort_id,
+			state,
+			remark,
+			tenant_id,
+			id
+		) VALUES (
+			#{areaCode},
+			#{areaName},
+			#{provinceCode},
+			#{cityCode},
+			#{areaLevel},
+			#{parentAreaCode},
+			#{sortId},
+			#{state},
+			#{remark},
+			#{tenantId},
+			#{areaCode}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE gn_area SET 	
+			area_code = #{areaCode},
+			area_name = #{areaName},
+			province_code = #{provinceCode},
+			city_code = #{cityCode},
+			area_level = #{areaLevel},
+			parent_area_code = #{parentAreaCode},
+			sort_id = #{sortId},
+			state = #{state},
+			remark = #{remark},
+			id = #{areaCode},
+			tenant_id = #{tenantId}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="updateParentIds">
+		UPDATE gn_area SET 
+			parent_id = #{parentAreaCode}, 
+			parent_ids = #{parentIds}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM gn_area WHERE  area_code = #{areaCode} 	
+	</update>
+	
+	
+</mapper>

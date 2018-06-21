@@ -1,0 +1,38 @@
+/*************************初始化*************************/
+*{font-family:"Microsoft Yahei","Hiragino Sans GB","Helvetica Neue",Helvetica,tahoma,arial,Verdana,sans-serif,"WenQuanYi Micro Hei","\5B8B\4F53";-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing:grayscale; box-sizing: border-box; border:0; padding:0; margin:0;}
+body{font-size:14px; color:#6a6c6f; background:#f5f5f6;}
+ul{ list-style:none;}
+a{text-decoration:none;font-size:12px;}
+a:link{ text-decoration:none;}
+a:active{ text-decoration:none;}
+var,em {font-style:normal;}
+table{border-collapse:collapse;}
+.left{ float:left}
+.right{ float:right;}
+.center{text-align: center;}
+input{outline:none;}
+button{outline:none; cursor:pointer;}
+html,body {height:100%; }
+img{vertical-align:middle}
+
+/**主体**/
+.loginbj{background:#353e46;}
+.herad{width:100%;background:#444d58;height:60px;padding:20px;margin-bottom:40px;}
+.login-user{width:960px;height:620px;margin:0 auto;background:url(../../images/bj.jpg) no-repeat;margin-top:40px;padding-top:230px;}
+.user-center{width:340px;height:330px;background:#fff;border-radius:5px;margin:0 auto;-webkit-box-shadow: #000 0px 0px 8px;-moz-box-shadow: #000 0px 0px 8px;box-shadow: #000 0px 0px 8px;}
+.user-list{width:340px;float:left;padding:20px 40px;}
+.user-list ul{width:100%;display: inline-block;}
+.user-list ul li{width:100%;position:relative;}
+.user-list ul li p{display: inline-block;}
+.user-list ul li .title{width:94px;height:22px;background:#3697f0;color:#fff;font-size:13px;font-weight:bold;text-align: center;line-height:24px;}
+.user-list ul .enword{}
+.user-list ul .int-ntext{width:250px;height:46px;border:1px solid #ddd;border-radius:5px;padding-left:46px;color:#666;font-size:14px;margin-bottom:20px;}
+.user-list ul i{position:absolute;left:10px;top:12px;font-size:18px;color:#666}
+.user-list ul .mt-30{margin-top:30px;}
+.user-list ul .pasw{font-size:12px;margin-top:10px;}
+.user-list ul .pasw a{font-size:12px;color:#3498db}
+.user-list ul .pasw .right{float:right;margin-right:15px;}
+.ncheckbox{width: 13px;height:13px;margin-right:10px;}
+.nwbtn{width:100%;margin-top:10px;float:left;}
+.nwbtn .nlogin-btn{width:100%;height:46px;background:#3697f0;border-radius:0 0  5px 5px;color:#fff;font-size:14px;cursor:pointer;}
+.user-footer{width:100%;float:left;text-align:center;bottom:50px;position:absolute;}
